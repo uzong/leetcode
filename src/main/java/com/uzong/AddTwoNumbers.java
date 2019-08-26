@@ -12,36 +12,45 @@ import org.junit.Test;
 public class AddTwoNumbers {
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        int result = nodeTransformNum(l1) + nodeTransformNum(l2);
+        Long result = nodeTransformNum(l1) + nodeTransformNum(l2);
         return numTransformNode(result);
     }
 
-    public int nodeTransformNum(ListNode node) {
-        int resultNum = 0;
-        int digit = 1;
-        while (node != null) {
+    public Long nodeTransformNum(ListNode node) {
+        Long resultNum = 0L;
+        Long digit = 1L;
+        while(node != null) {
             resultNum = resultNum + digit * node.val;
-            digit = digit * 10;
+            digit = digit * 10L;
             node = node.next;
         }
         return resultNum;
     }
 
-    public ListNode numTransformNode(int num) {
-        ListNode node = null;
+    /**
+     * 使用尾插法将数字转换成链表。特殊处理num=0
+     * @param num 数字
+     * @return 头结点
+     */
+    public ListNode numTransformNode(Long num) {
+        if(num == 0) {
+            return new ListNode(0);
+        }
+        ListNode head = null;
+        ListNode tail = null;
         int remainder = 0;
         while(num > 0) {
-            remainder = num % 10;
-            ListNode newNode = new ListNode(remainder);
-            if(node == null) {
-                node = newNode;
-            } else {
-                node.next = newNode;
+            remainder = (int) (num % 10);
+            ListNode current = new ListNode(remainder);
+            if(head == null) {
+                head = tail = current;
+            }else {
+                tail.next = current;
+                tail = current;
             }
-            node = node.next;
             num = num / 10;
         }
-        return node;
+        return head;
     }
 
     /**
@@ -51,35 +60,45 @@ public class AddTwoNumbers {
      */
     @Test
     public void testAddTwoNumbers() {
-        ListNode node2 = new ListNode(2);
-        ListNode node4 = new ListNode(4);
-        ListNode node3 = new ListNode(3);
-        ListNode node5 = new ListNode(5);
-        ListNode node6 = new ListNode(6);
-        ListNode node41 = new ListNode(4);
-        ListNode node7 = new ListNode(7);
-        ListNode node0 = new ListNode(0);
-        ListNode node8 = new ListNode(8);
-        // (2 -> 4 -> 3)
-        node2.next = node4;
-        node4.next = node3;
-        // (5 -> 6 -> 4)
-        node5.next = node6;
-        node6.next = node41;
-        // 7 -> 0 -> 8
-        node7.next = node0;
-        node0.next = node8;
+        ListNode node243 = buildListNode(new int[]{2,4,3});
+        ListNode node708 = buildListNode(new int[]{7,0,8});
 
-        ListNode result = addTwoNumbers(node2,node5);
+        ListNode nodeo9 = buildListNode(new int[]{9});
+        ListNode noden9 = buildListNode(new int[]{1,9,9,9,9,9,9,9,9,9});
 
+        ListNode result = addTwoNumbers(nodeo9,noden9);
         print(result);
     }
 
+    /**
+     * 打印
+     * @param node 头结点
+     */
     public void print(ListNode node) {
         while(node != null) {
             System.out.print(node.val + " ");
             node =  node.next;
         }
+    }
+
+    /**
+     * 根据数组未插入法构建结点。
+     * @param nums 数组
+     * @return 头结点
+     */
+    public ListNode buildListNode(int[] nums) {
+        ListNode head = null;
+        ListNode tail = null;
+        for(int i = 0; i < nums.length; i++) {
+            ListNode current = new ListNode(nums[i]);
+            if(head == null) {
+                head = tail = current;
+            } else {
+                tail.next = current;
+                tail = current;
+            }
+        }
+        return head;
     }
 }
 
@@ -89,5 +108,10 @@ class ListNode {
 
     ListNode(int x) {
         val = x;
+    }
+
+    public void add() {
+        int a = 9;
+        Long b = 9999999991L;
     }
 }
