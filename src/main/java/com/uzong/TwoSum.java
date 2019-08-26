@@ -1,8 +1,5 @@
 package com.uzong;
 
-
-
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +12,7 @@ import java.util.HashMap;
  * 链接：https://leetcode-cn.com/problems/two-sum
  * @author uzong
  */
-public class Solution {
+public class TwoSum {
 
     public int[] twoSum(int[] nums, int target) {
         int len = nums.length;
