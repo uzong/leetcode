@@ -10,6 +10,61 @@ import java.util.Queue;
  */
 public class AddTwoNumbers2 {
 
+    /**
+     * 官方答案
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
+        ListNode dummyHead = new ListNode(0);
+        ListNode p = l1, q = l2, curr = dummyHead;
+        int carry = 0;
+        while (p != null || q != null) {
+            int x = (p != null) ? p.val : 0;
+            int y = (q != null) ? q.val : 0;
+            int sum = carry + x + y;
+            carry = sum / 10;
+            curr.next = new ListNode(sum % 10);
+            curr = curr.next;
+            if (p != null) p = p.next;
+            if (q != null) q = q.next;
+        }
+        if (carry > 0) {
+            curr.next = new ListNode(carry);
+        }
+        return dummyHead.next;
+    }
+
+    public ListNode addTwoNumbers3(ListNode l1, ListNode l2) {
+        ListNode dummyHead = new ListNode(0);
+        ListNode curr = dummyHead;
+        int carry = 0;
+        while (l1 != null || l2 != null) {
+            int sum1 = (l1 != null) ? l1.val : 0;
+            int sum2 = (l2 != null) ? l2.val : 0;
+            int sum = sum1 + sum2 + carry;
+            curr.next = new ListNode(sum % 10);
+            l1 = (l1 != null) ? l1.next : null;
+            l2 = (l2 != null) ? l2.next : null;
+            carry = sum / 10;
+            curr = curr.next;
+        }
+        if(carry > 0) {
+            curr.next = new ListNode(carry);
+        }
+        return dummyHead.next;
+    }
+
+    @Test
+    public void testAddTwoNumbers3() {
+        ListNode nodeo9 = buildListNode(new int[]{9});
+        ListNode noden9 = buildListNode(new int[]{1,9,9,9,9,9,9,9,9,9});
+        ListNode result = addTwoNumbers3(nodeo9,noden9);
+        print(result);
+    }
+
+
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         Queue<Integer> queue1 = nodeTransformQueue(l1);
         Queue<Integer> queue2 = nodeTransformQueue(l2);
