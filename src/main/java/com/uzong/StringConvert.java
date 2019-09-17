@@ -54,10 +54,15 @@ public class StringConvert {
         }
         printChars(chars,s.length());
         StringBuilder builder = new StringBuilder();
-        for(int i = 0; i < len; i++) {
+        int count = 0;
+        out:for(int i = 0; i < len; i++) {
             for(int j = 0; j < len; j++) {
                 if(chars[j][i] != null) {
+                    count++;
                     builder.append(chars[j][i]);
+                    if(count>=len) {
+                        break out;
+                    }
                 }
             }
         }
